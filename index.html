@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Automation Suite</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+</head>
+<body>
+
+<div class="topbar">
+    <div>
+        <div class="topbar-title">⚡ EXCEL AUTOMATION SUITE</div>
+        <div class="topbar-sub">Upload · Clean · Analyze · Visualize</div>
+    </div>
+</div>
+
+{% if error %}
+<div class="error-box">⚠️ {{ error }}</div>
+{% endif %}
+
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-left">
+            <h1>AUTOMATE YOUR EXCEL DATA</h1>
+            <p>
+                Upload any Excel file to automatically clean duplicates,
+                handle missing values, generate statistics and
+                create beautiful charts — in seconds.
+            </p>
+            <form action="/process" method="POST" enctype="multipart/form-data">
+                <div class="upload-area">
+                    <p>📁 Drop your Excel file here</p>
+                    <span>Supported format: .xlsx only</span>
+                    <input type="file" name="file" accept=".xlsx" required>
+                    <button type="submit" class="btn">🚀 PROCESS FILE</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="feats">
+            <div class="feat">Removes Duplicates</div>
+            <div class="feat">Handles Missing Values</div>
+            <div class="feat">Cleans Formatting</div>
+            <div class="feat">Summary Statistics</div>
+            <div class="feat">Creates Charts</div>
+            <div class="feat">Exports Clean File</div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    Built with Python · Flask · Pandas · Matplotlib
+</div>
+
+</body>
+</html>

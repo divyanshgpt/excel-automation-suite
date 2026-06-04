@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results — Excel Automation Suite</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+</head>
+<body>
+
+<div class="topbar">
+    <div>
+        <div class="topbar-title">⚡ EXCEL AUTOMATION SUITE</div>
+        <div class="topbar-sub">Upload · Clean · Analyze · Visualize</div>
+    </div>
+    <a href="/" class="btn">⬅ PROCESS ANOTHER FILE</a>
+</div>
+
+<div class="body">
+
+    <!-- Raw Data Overview -->
+    <div class="card">
+        <h2>📋 RAW DATA OVERVIEW</h2>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-num">{{ raw_info.rows }}</div>
+                <div class="stat-label">Total Rows</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">{{ raw_info.columns }}</div>
+                <div class="stat-label">Columns</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">{{ raw_info.duplicates }}</div>
+                <div class="stat-label">Duplicates</div>
+            </div>
+        </div>
+        <table>
+            <tr><th>Column</th><th>Missing Values</th></tr>
+            {% for col, count in raw_info.missing_values.items() %}
+            <tr>
+                <td>{{ col }}</td>
+                <td>{{ count }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Statistics -->
+    <div class="card">
+        <h2>📈 SUMMARY STATISTICS</h2>
+        {% if stats.numeric %}
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Average</th>
+                <th>Highest</th>
+                <th>Lowest</th>
+            </tr>
+            {% for col, s in stats.numeric.items() %}
+            <tr>
+                <td>{{ col }}</td>
+                <td>{{ s.average }}</td>
+                <td>{{ s.highest }}</td>
+                <td>{{ s.lowest }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if stats.text %}
+        <br>
+        <table>
+            <tr>
+                <th>Column</th>
+                <th>Unique</th>
+                <th>Most Common</th>
+            </tr>
+            {% for col, s in stats.text.items() %}
+            <tr>
+                <td>{{ col }}</td>
+                <td>{{ s.unique }}</td>
+                <td>{{ s.most_common }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+
+    <!-- Cleaned Data -->
+    <div class="card-full">
+        <h2>🧹 CLEANED DATA</h2>
+        {{ table | safe }}
+    </div>
+
+    <!-- Charts -->
+    {% if charts %}
+    <div class="card-full">
+        <h2>📊 CHARTS & VISUALIZATIONS</h2>
+        <div class="chart-grid">
+            {% for chart in charts %}
+            <div class="chart-card">
+                <img src="/charts/{{ chart_folder }}/{{ chart }}"
+                     alt="{{ chart }}">
+                <p>{{ chart.replace('_', ' ').replace('.png', '') }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Download -->
+    <div class="card-full">
+        <h2>⬇️ DOWNLOAD RESULTS</h2>
+        <a href="/download/{{ cleaned_file }}" class="btn">
+            📥 DOWNLOAD CLEANED EXCEL FILE
+        </a>
+    </div>
+
+</div>
+
+<div class="footer">
+    Built with Python · Flask · Pandas · Matplotlib
+</div>
+
+</body>
+</html>
