@@ -1,11 +1,14 @@
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
+
 from flask import Flask, render_template, request, send_file
-from src.reader import load_excel
-from src.analyzer import explore_data_dict, generate_statistics_dict
-from src.cleaner import remove_duplicates, handle_missing_values, clean_data, export_clean_data
-from src.visualizer import create_charts
+from reader import load_excel
+from analyzer import explore_data_dict, generate_statistics_dict
+from cleaner import remove_duplicates, handle_missing_values, clean_data, export_clean_data
+from visualizer import create_charts
 
 app = Flask(__name__)
 
