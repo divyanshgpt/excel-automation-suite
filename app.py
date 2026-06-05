@@ -10,7 +10,9 @@ from analyzer import explore_data_dict, generate_statistics_dict
 from cleaner import remove_duplicates, handle_missing_values, clean_data, export_clean_data
 from visualizer import create_charts
 
-app = Flask(__name__)
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'templates')
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'static')
+app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
 UPLOAD_FOLDER = "data/raw"
 PROCESSED_FOLDER = "data/processed"
